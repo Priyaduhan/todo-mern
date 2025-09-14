@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 dotenv.config({
   path: "./env",
 });
+const PORT = process.env.PORT || 9000;
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,6 @@ app.use("/api", todoRoutes);
 
 app.use("/api/userData", userRoutes);
 
-app.listen(9000, () => {
+app.listen(PORT, () => {
   console.log("server listening on port 9000");
 });
