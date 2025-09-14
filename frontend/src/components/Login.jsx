@@ -4,6 +4,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     console.log("logindata is", data);
     try {
-      const response = await fetch("/api/userData/login", {
+      const response = await fetch(`${API_URL}/api/userData/login`, {
         method: "POST",
         credentials: "include",
         headers: {

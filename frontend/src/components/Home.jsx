@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Home = () => {
   const [ToDo, setToDo] = useState([]);
   const [taskList, setTaskList] = useState([]); // state to show the list of all tasks
@@ -23,7 +25,7 @@ const Home = () => {
   };
 
   const addTask = async () => {
-    const response = await fetch("/api", {
+    const response = await fetch(`${API_URL}/api`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -41,7 +43,7 @@ const Home = () => {
 
   const printTask = async () => {
     try {
-      const response = await fetch("/api", {
+      const response = await fetch(`${API_URL}/api`, {
         method: "GET",
         credentials: "include",
       });
@@ -59,7 +61,7 @@ const Home = () => {
 
   const deleteTodoTask = async (id) => {
     try {
-      const response = await fetch(`/api/${id}`, {
+      const response = await fetch(`${API_URL}/api/${id}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -79,12 +81,12 @@ const Home = () => {
         return;
       }
 
-      const response = await fetch(`/api/${editTaskId}`, {
+      const response = await fetch(`${API_URL}/api/${editTaskId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({title: editedTask }),
+        body: JSON.stringify({ title: editedTask }),
       });
       const updatedData = await response.json();
       setTaskList(
@@ -105,7 +107,7 @@ const Home = () => {
       const newChecked = !currentStatus;
       setIsChecked(newChecked);
 
-      const response = await fetch(`/api/checked/${id}`, {
+      const response = await fetch(`${API_URL}/api/checked/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

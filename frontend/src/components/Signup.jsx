@@ -4,6 +4,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +29,7 @@ const Signup = () => {
     try {
       console.log(data);
 
-      const response = await fetch("/api/userData", {
+      const response = await fetch(`${API_URL}/api/userData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
