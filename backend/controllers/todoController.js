@@ -19,7 +19,7 @@ export const createTodo = async (req, res) => {
 
 export const showTodo = async (req, res) => {
   try {
-    console.log("show to do ,", req);
+    // console.log("show to do ,", req);
 
     // console.log("user id is::", req.user_id);
 
@@ -49,7 +49,7 @@ export const updateTask = async (req, res) => {
     // console.log("request coming is");
     const id = req.params.id;
     // console.log(req);
-    const newTask = req.body.editedTask;
+    const newTask = req.body.title;
     console.log("req.body is ", req.body.editedTask);
     const updateNewTask = await todoModel.findByIdAndUpdate(
       id,
