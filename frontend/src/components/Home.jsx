@@ -25,20 +25,26 @@ const Home = () => {
   };
 
   const addTask = async () => {
-    const response = await fetch(`${API_URL}/api`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ task: ToDo, isCompleted: false }),
-    });
+    try {
+      const response = await fetch(`${API_URL}/api`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ task: ToDo, isCompleted: false }),
+      });
 
-    const result = await response.json();
-    console.log("result addtodo get from server is", result);
-    setTaskList([...taskList, result]);
+      const result = await response.json();
+      console.log("result addtodo get from server is", result);
+      if (result && result._id) {
+        setTaskList([...taskList, result]);
+      }
 
-    setToDo("");
+      setToDo("");
+    } catch (error) {
+      console.log("error in addTask:", error);
+    }
   };
 
   const printTask = async () => {
@@ -50,12 +56,21 @@ const Home = () => {
 
       const result = await response.json();
       console.log(result);
-      setTaskList(result);
+      // setTaskList(result);
+
+      if (Array.isArray(result)) {
+        setTaskList(result);
+        console.log("task list set successfully");
+      } else {
+        console.error("Expected array but got:", result);
+        setTaskList([]); // fallback to empty array
+      }
       console.log("task list is set");
 
       // console.log("task list useState is", taskList);
     } catch (error) {
       console.log("some error is ", error);
+      setTaskList([]);
     }
   };
 

@@ -3,7 +3,9 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 const generateToken = (id, email) => {
-  return jwt.sign({ id, email }, process.env.JWT_SECRET);
+  return jwt.sign({ id, email }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 };
 
 export const saveSignupFormInDB = async (req, res) => {
@@ -30,9 +32,9 @@ export const loginTodo = async (req, res) => {
       const token = generateToken(UserCredentials._id, UserCredentials.email);
 
       res.cookie("jwtoken", token, {
-        httpOnly: false,
-        secure: false,
-        sameSite: "lax", // or "none" if cross-origin
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // or "none" if cross-origin
         path: "/",
         maxAge: 30 * 24 * 60 * 60 * 1000,
       });

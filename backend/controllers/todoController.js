@@ -83,7 +83,7 @@ export const updateCompletedTask = async (req, res) => {
       }
     );
 
-    res.json({ msg: "sucess checked" });
+    res.json(updateTask);
   } catch (error) {
     console.log("some error occur", error);
   }
